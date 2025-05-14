@@ -3,3 +3,8 @@ PARA INICAR EL SERVIDOR, EN LA TERMINAR COLOCAR
 
 php artisan serve     
 npm run watch
+
+
+GMAIL FICTICIO DE ADMINISTRADOR 
+Gmail   -  admin@example.com
+password   -   empresainformatica
