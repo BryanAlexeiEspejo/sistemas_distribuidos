@@ -9,6 +9,13 @@
             </div>
 
             <div class="card-body">
+
+                @if (session('error'))
+                <div class="alert alert-danger text-center" style="background-color: #ff4d4d; color: white; border-radius: 8px;">
+                    {{ session('error') }}
+                </div>
+            @endif
+
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 

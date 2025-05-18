@@ -43,8 +43,9 @@ Route::get('/auth/google/callback', function () {
         $user = User::where('email', $googleUser->getEmail())->first();
 
         if ($user) {
-            // Si el usuario ya existe, redirige al login con un mensaje
-            Session::flash('google_registered_email', true);
+            Auth::login($user);
+            Session::flash('error', 'Esta cuenta de Google ya está registrada. Por favor, inicie sesión.');
+
             return redirect()->route('login');
         }
 
@@ -73,7 +74,9 @@ Route::get('/auth/google/callback', function () {
 
 
 
-
+Route::get('/informacion', function () {
+    return view('informacion');
+})->name('informacion');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
@@ -97,6 +100,9 @@ use App\Http\Controllers\ProfileController;
 Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile');
 Route::post('/profile', [ProfileController::class, 'updatePassword']);
 
+
 use App\Http\Controllers\ControlEntradaSalidaController;
 
 Route::get('/control-entradas-salidas', [ControlEntradaSalidaController::class, 'index'])->name('control_entradas_salidas.index');
+
+

@@ -67,19 +67,19 @@
             <div class="swiper mySwiper">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <img src="https://via.placeholder.com/800x400/1e3a8a/ffffff?text=Rock+Festival"
+                        <img src="https://360radio.com.co/wp-content/uploads/2025/02/concierto-3.webp"
                             class="w-full rounded-lg shadow-md" />
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://via.placeholder.com/800x400/475569/ffffff?text=Pop+Night"
+                        <img src="https://static.vecteezy.com/system/resources/previews/054/961/521/non_2x/energetic-concert-at-a-lively-venue-with-vibrant-lights-and-a-cheering-crowd-enjoying-a-night-of-music-and-entertainment-photo.jpeg"
                             class="w-full rounded-lg shadow-md" />
                     </div>
                     <div class="swiper-slide">
-                        <img src="https://via.placeholder.com/800x400/111827/ffffff?text=EDM+Party"
+                        <img src="https://emprendedores.es/wp-content/uploads/conciertos-1589446877.jpg"
                             class="w-full rounded-lg shadow-md" />
                     </div>
                 </div>
-                <div class="swiper-pagination mt-4"></div>
+                <div class="swiper-pagination mt-3"></div>
             </div>
         </div>
     </section>

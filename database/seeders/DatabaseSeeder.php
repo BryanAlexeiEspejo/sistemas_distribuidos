@@ -13,7 +13,6 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             GeneroSeeder::class,
             AdminUserSeeder::class,
-CategoriaSeeder::class,
         ]);
     }
 }

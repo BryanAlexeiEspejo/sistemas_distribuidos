@@ -18,7 +18,7 @@ public function index(Request $request)
         ->where('nombre', 'LIKE', "%{$search}%")
         ->orWhere('apellido', 'LIKE', "%{$search}%")
         ->orWhere('email', 'LIKE', "%{$search}%")
-        ->paginate(3);
+        ->paginate(7);
 
     return response()->json($users);
 }

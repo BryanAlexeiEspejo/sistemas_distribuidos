@@ -50,9 +50,20 @@ function ListUsuarios() {
     };
 
     return (
+
         <div className="container">
+<br />
+            <br />
+
+            <div class="d-flex justify-content-start mt-4 pl-4">
+                <a href="{{ url('home') }}" class="btn btn-primary btn-sm">
+                    ⬅️ Volver al inicio
+                </a>
+            </div>
+            <br />
             <h1>Lista de Usuarios</h1>
             <div className="d-flex justify-content-between mb-3">
+
                 <a href="/usuarios/create" className="btn btn-primary">Crear Usuario</a>
                 <input
                     type="text"

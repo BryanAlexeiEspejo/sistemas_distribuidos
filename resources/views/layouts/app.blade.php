@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Empresa') }}</title>
+    <title>{{ config('app.name', 'Conciertos Live') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -31,10 +31,11 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm fixed-top">
+
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Empresa') }}
+                    {{ config('app.name', 'Conciertos LIve') }}
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
