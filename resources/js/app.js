@@ -38,5 +38,13 @@ if (document.getElementById('user-detail')) {
     ReactDOM.render(<UserDetail userId={userId} />, document.getElementById('user-detail'));
 }
 
+require('./components/paises/ListPaises');
+require('./components/paises/CreatePaises');
 
+if (document.getElementById("ListPaises")) {
+    ReactDOM.render(<ListPaises />, document.getElementById("ListPaises"));
+}
 
+if (document.getElementById("CreatePaises")) {
+    ReactDOM.render(<CreatePaises />, document.getElementById("CreatePaises"));
+}

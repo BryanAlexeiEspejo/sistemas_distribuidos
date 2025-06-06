@@ -1,159 +1,125 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-12 text-right">
-                <!-- Botón Volver en la parte superior derecha -->
-                <a href="{{ route('home') }}" class="btn btn-secondary mt-3">Volver</a>
-            </div>
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-gradient-to-r from-gray-100 to-blue-100 rounded-xl shadow-xl">
+    <div class="mb-6">
+        <a href="{{ url('home') }}" class="inline-block bg-blue-600 text-white px-4 py-2 text-sm rounded hover:bg-blue-700">
+            ⬅️ Volver al inicio
+        </a>
+    </div>
+
+    <h2 class="text-2xl font-bold text-blue-600 mb-4">Perfil de {{ $user->nombre }} {{ $user->apellido }}</h2>
+
+    <div class="mb-4">
+        <label for="nombre" class="block font-semibold text-gray-700">Nombre</label>
+        <input type="text" id="nombre" value="{{ $user->nombre }}" disabled class="w-full bg-white border border-gray-300 rounded px-4 py-2 text-gray-700 font-medium">
+    </div>
+
+    <div class="mb-4">
+        <label for="apellido" class="block font-semibold text-gray-700">Apellido</label>
+        <input type="text" id="apellido" value="{{ $user->apellido }}" disabled class="w-full bg-white border border-gray-300 rounded px-4 py-2 text-gray-700 font-medium">
+    </div>
+
+    <div class="mb-4">
+        <label for="email" class="block font-semibold text-gray-700">Correo Electrónico</label>
+        <input type="email" id="email" value="{{ $user->email }}" disabled class="w-full bg-white border border-gray-300 rounded px-4 py-2 text-gray-700 font-medium">
+    </div>
+
+    @if(session('success'))
+        <div class="bg-green-100 text-green-800 px-4 py-2 rounded mb-4">
+            {{ session('success') }}
         </div>
-        <div class="d-flex justify-content-start mt-4 pl-4">
-            <a href="{{ url('home') }}" class="btn btn-primary btn-sm">
-                ⬅️ Volver al inicio
-            </a>
+    @endif
+
+    @if(session('error'))
+        <div class="bg-red-100 text-red-800 px-4 py-2 rounded mb-4">
+            {{ session('error') }}
         </div>
-<br>
-        <h2>Perfil de {{ $user->nombre }} {{ $user->apellido }}</h2>
+    @endif
 
-        <div class="form-group">
-            <label for="nombre">Nombre</label>
-            <input type="text" class="form-control" id="nombre" value="{{ $user->nombre }}" disabled>
+    <button id="change-password-btn" type="button" class="bg-yellow-400 hover:bg-yellow-500 text-white font-semibold px-4 py-2 rounded">
+        Cambiar Contraseña
+    </button>
+</div>
+
+<!-- Modal -->
+<div id="changePasswordModal" class="fixed inset-0 hidden z-50 bg-black bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-lg w-full max-w-md">
+        <div class="bg-blue-600 text-white text-lg font-semibold rounded-t-lg px-4 py-3 flex justify-between items-center">
+            <h5 class="m-0">Cambiar Contraseña</h5>
+            <button id="close-modal" class="text-white text-2xl leading-none">&times;</button>
         </div>
-
-        <div class="form-group">
-            <label for="apellido">Apellido</label>
-            <input type="text" class="form-control" id="apellido" value="{{ $user->apellido }}" disabled>
-        </div>
-
-        <div class="form-group">
-            <label for="email">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" value="{{ $user->email }}" disabled>
-        </div>
-
-        <!-- Mensajes de éxito o error -->
-        @if(session('success'))
-            <div class="alert alert-success mt-3">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if(session('error'))
-            <div class="alert alert-danger mt-3">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <!-- Botón para abrir el modal de cambio de contraseña -->
-        <button type="button" class="btn btn-warning mt-3" id="change-password-btn">Cambiar Contraseña</button>
-
-        <!-- Modal de cambio de contraseña -->
-        <div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog"
-            aria-labelledby="changePasswordModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="changePasswordModalLabel">Cambiar Contraseña</h5>
-                        <!-- Botón de cierre funcional -->
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                            <span aria-hidden="true">&times;</span>
+        <div class="p-6">
+            <form action="{{ route('profile') }}" method="POST">
+                @csrf
+                <div class="mb-4">
+                    <label for="password" class="block font-semibold text-gray-700">Nueva Contraseña</label>
+                    <div class="relative">
+                        <input type="password" name="password" id="password" required placeholder="Ingrese su nueva contraseña" class="w-full border border-gray-300 rounded px-4 py-2">
+                        <button type="button" id="toggle-password" class="absolute right-2 top-2 text-blue-600">
+                            <i class="fas fa-eye"></i>
                         </button>
                     </div>
-                    <div class="modal-body">
-                        <form action="{{ route('profile') }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for="password">Nueva Contraseña</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password" name="password"
-                                        placeholder="Ingrese su nueva contraseña" required>
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary" id="toggle-password">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
 
-                            <div class="form-group">
-                                <label for="password_confirmation">Confirmar Contraseña</label>
-                                <div class="input-group">
-                                    <input type="password" class="form-control" id="password_confirmation"
-                                        name="password_confirmation" placeholder="Confirme su nueva contraseña" required>
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-secondary"
-                                            id="toggle-password-confirmation">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-    <!-- Selección de género -->
-    <div class="form-group">
-        <label for="genero_id">Género</label>
-        <select class="form-control" name="genero_id" id="genero_id" required>
-            @foreach ($generos as $genero)
-                <option value="{{ $genero->id_genero }}" {{ $user->genero_id == $genero->id_genero ? 'selected' : '' }}>
-                    {{ $genero->nombre_genero }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-                            <button type="submit" class="btn btn-primary">Actualizar Contraseña</button>
-                        </form>
+                <div class="mb-4">
+                    <label for="password_confirmation" class="block font-semibold text-gray-700">Confirmar Contraseña</label>
+                    <div class="relative">
+                        <input type="password" name="password_confirmation" id="password_confirmation" required placeholder="Confirme su nueva contraseña" class="w-full border border-gray-300 rounded px-4 py-2">
+                        <button type="button" id="toggle-password-confirmation" class="absolute right-2 top-2 text-blue-600">
+                            <i class="fas fa-eye"></i>
+                        </button>
                     </div>
                 </div>
-            </div>
+
+                <div class="mb-4">
+                    <label for="genero_id" class="block font-semibold text-gray-700">Género</label>
+                    <select name="genero_id" id="genero_id" required class="w-full border border-gray-300 rounded px-4 py-2">
+                        @foreach ($generos as $genero)
+                            <option value="{{ $genero->id_genero }}" {{ $user->genero_id == $genero->id_genero ? 'selected' : '' }}>
+                                {{ $genero->nombre_genero }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+                        Actualizar Contraseña
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
-    <!-- Script para el modal y la visibilidad de contraseñas -->
-    <script>
-        // Mostrar el modal
-        document.getElementById('change-password-btn').addEventListener('click', function () {
-            $('#changePasswordModal').modal('show');
-        });
+<!-- Script -->
+<script>
+    document.getElementById('change-password-btn').addEventListener('click', () => {
+        document.getElementById('changePasswordModal').classList.remove('hidden');
+    });
 
-        // Ocultar el modal al presionar el botón de cierre
-        $('.close').on('click', function () {
-            $('#changePasswordModal').modal('hide');
-        });
+    document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('changePasswordModal').classList.add('hidden');
+    });
 
-        // Toggle visibility de la contraseña
-        document.getElementById('toggle-password').addEventListener('click', function () {
-            const passwordField = document.getElementById('password');
-            const icon = this.querySelector('i');
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
+    document.getElementById('toggle-password').addEventListener('click', function () {
+        const field = document.getElementById('password');
+        const icon = this.querySelector('i');
+        field.type = field.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
 
-        // Toggle visibility de la confirmación de contraseña
-        document.getElementById('toggle-password-confirmation').addEventListener('click', function () {
-            const passwordConfirmationField = document.getElementById('password_confirmation');
-            const icon = this.querySelector('i');
-            if (passwordConfirmationField.type === 'password') {
-                passwordConfirmationField.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                passwordConfirmationField.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
-    </script>
+    document.getElementById('toggle-password-confirmation').addEventListener('click', function () {
+        const field = document.getElementById('password_confirmation');
+        const icon = this.querySelector('i');
+        field.type = field.type === 'password' ? 'text' : 'password';
+        icon.classList.toggle('fa-eye');
+        icon.classList.toggle('fa-eye-slash');
+    });
+</script>
 
-    <!-- Incluir las dependencias necesarias -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<!-- FontAwesome para íconos -->
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 @endsection

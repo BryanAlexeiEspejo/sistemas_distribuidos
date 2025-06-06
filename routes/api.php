@@ -28,6 +28,8 @@ use App\Http\Controllers\UserController;
 
 Route::resource('usuarios', UserController::class);
 
+
+
 use App\Http\Controllers\CategoriaController;
 
 Route::get('/categorias', [CategoriaController::class, 'index']);

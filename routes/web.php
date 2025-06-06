@@ -89,9 +89,9 @@ Route::get('/usuarios/{id}/edit', function ($id) { return view('usuarios.edit', 
 Route::get('/usuarios/{id}', function ($id) {return view('usuarios.show', ['id' => $id]);});
 
 
-Route::get('/productos', function () { return view('productos.index'); });
-Route::get('/productos/create', function () { return view('productos.create'); });
-Route::get('/productos/{id}/edit', function ($id) { return view('productos.edit', ['id' => $id]); });
+use App\Http\Controllers\CountryController;
+Route::resource('countries', CountryController::class);
+
 
 
 
@@ -106,3 +106,41 @@ use App\Http\Controllers\ControlEntradaSalidaController;
 Route::get('/control-entradas-salidas', [ControlEntradaSalidaController::class, 'index'])->name('control_entradas_salidas.index');
 
 
+
+
+use App\Http\Controllers\EventController;
+
+//API1
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+
+
+
+use App\Http\Controllers\StateController;
+
+Route::resource('states', StateController::class);
+
+use App\Http\Controllers\CityController;
+
+Route::resource('cities', CityController::class);
+
+use App\Http\Controllers\LocationTypeController;
+
+Route::resource('location_types', LocationTypeController::class);
+
+
+use App\Http\Controllers\EventTypeController;
+
+Route::resource('event_types', EventTypeController::class);
+
+
+use App\Http\Controllers\EventStatusController;
+
+Route::resource('event_statuses', EventStatusController::class);
+
+
+
+
+Route::get('/ticket', function () {
+    return view('ticket');
+})->name('ticket.view');

@@ -10,7 +10,7 @@ function Example() {
                     <div className="card">
                         <div className="card-header">Esto es un ejejmplo de componente react.js</div>
 
-                        <div className="card-body">Ejemplo de compoenete o estructura de codigo como ejejmplo de estrutura usa los 3 imports y el redenrizado if del final, </div>
+                        <div className="card-body"></div>
                     </div>
                 </div>
             </div>
