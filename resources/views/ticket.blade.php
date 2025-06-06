@@ -6,7 +6,7 @@
         <div
             class="bg-gradient-to-r from-indigo-600 to-purple-700 border-4 border-indigo-800 shadow-2xl rounded-xl p-6 mb-10 text-center text-white">
             <h2 class="text-5xl font-extrabold drop-shadow-lg flex justify-center items-center gap-3">
-                <span>🎤</span> Rick Springfield - Gira "QUIERO MIS 80s"
+                <span>🎤</span> Rick Springfield - Gira "QUIERO MIS 800s"
             </h2>
             <p class="text-xl mt-2">📍 Allianz Amphitheater, Richmond, VA</p>
             <p class="text-md italic">Inspirado en el Teatro al Aire Libre "Jaime Laredo" 🇧🇴</p>
