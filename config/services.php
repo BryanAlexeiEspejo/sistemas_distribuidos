@@ -34,4 +34,14 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI'),
     ],
+
+
+'users_api' => [
+    'base_url' => env('USERS_API_URL'),
+],
+
+'events_api' => [
+    'base_url' => env('EVENTS_API_URL'),
+],
+
 ];

@@ -8,7 +8,6 @@ use Illuminate\Auth\Events\Login;
 use Illuminate\Auth\Events\Logout;  // Importar el evento Logout
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
-use App\Models\ControlEntradaSalida;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -32,22 +31,6 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        // Escuchar cuando un usuario inicia sesión
-        Event::listen(Login::class, function ($event) {
-            ControlEntradaSalida::create([
-                'email' => $event->user->email, // Se obtiene el email del usuario
-                'tipo' => 'entrada', // Tipo de acción
-                'fecha_hora' => now(), // Fecha y hora actual
-            ]);
-        });
 
-        // Escuchar cuando un usuario cierra sesión
-        Event::listen(Logout::class, function ($event) {
-            ControlEntradaSalida::create([
-                'email' => $event->user->email, // Se obtiene el email del usuario
-                'tipo' => 'salida', // Tipo de acción
-                'fecha_hora' => now(), // Fecha y hora actual
-            ]);
-        });
     }
 }

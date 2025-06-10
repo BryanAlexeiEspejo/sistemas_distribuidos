@@ -22,6 +22,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 
 
+<!-- Bootstrap JS + Popper.js (necesario para dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-Xy6EeZwW6A1nZ4Csyg5kDgKnmh5D83SnI6OhzcnkBhnPdArM9+yI2Na/kGNXwPsb" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-q2kyHH3BULyWThZ7nZRTW7Un+ImOZeqLa+9Szx9rq9aDwuvx5zqUBb6M53SEpLVj" crossorigin="anonymous"></script>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7N4UYleUl1tW1cpImSspvM2Cg5r8pW9UQp6" crossorigin="anonymous">
+
+
 <!-- Bootstrap para modal -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

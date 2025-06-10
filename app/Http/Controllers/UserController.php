@@ -2,122 +2,77 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Role;
-use App\Models\Estado;
-use App\Models\Genero;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
-public function index(Request $request)
-{
-    $search = $request->input('search', '');
-    $users = User::with(['role', 'estado', 'genero'])
-        ->where('nombre', 'LIKE', "%{$search}%")
-        ->orWhere('apellido', 'LIKE', "%{$search}%")
-        ->orWhere('email', 'LIKE', "%{$search}%")
-        ->paginate(7);
-
-    return response()->json($users);
-}
-
-
-    public function create()
+    public function perfiles($id)
     {
-        $roles = Role::all();
-        $estados = Estado::all();
-        $generos = Genero::all();
-        return response()->json([
-            'roles' => $roles,
-            'estados' => $estados,
-            'generos' => $generos,
-        ]);
-    }
-
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nombre' => 'required|string|max:50',
-            'apellido' => 'required|string|max:50',
-            'email' => 'required|string|email|max:50|unique:users',
-            'password' => 'required|string|min:8',
-            'role_id' => 'required|exists:roles,id',
-            'estado_id' => 'required|exists:estados,id',
-            'genero_id' => 'required|exists:generos,id_genero',
-        ]);
-
-        $user = User::create([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-            'estado_id' => $request->estado_id,
-            'genero_id' => $request->genero_id,
-            'errores_usuario' => 0,
-        ]);
-
-        return response()->json($user, 201);
-    }
-
-public function edit($id)
-{
-    $user = User::findOrFail($id);
-    $roles = Role::all();
-    $estados = Estado::all();
-    $generos = Genero::all();
-
-    return response()->json([
-        'user' => $user,
-        'roles' => $roles,
-        'estados' => $estados,
-        'generos' => $generos,
-    ]);
-}
-
-
-    public function update(Request $request, $id)
-    {
-        $user = User::findOrFail($id);
-
-        $request->validate([
-            'nombre' => 'required|string|max:50',
-            'apellido' => 'required|string|max:50',
-            'email' => 'required|string|email|max:50|unique:users,email,' . $id,
-            'role_id' => 'required|exists:roles,id',
-            'estado_id' => 'required|exists:estados,id',
-            'genero_id' => 'required|exists:generos,id_genero',
-        ]);
-
-        $user->update([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'email' => $request->email,
-            'role_id' => $request->role_id,
-            'estado_id' => $request->estado_id,
-            'genero_id' => $request->genero_id,
-        ]);
-
-        if ($request->filled('password')) {
-            $user->update(['password' => Hash::make($request->password)]);
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/profiles");
+        if ($response->successful()) {
+            $perfil = $response->json();
+            return view('user_profiles.perfiles', compact('perfil'));
         }
-
-        return response()->json($user);
+        abort(404, 'Perfil no encontrado');
     }
 
-    public function show($id)
+    public function sesiones($id)
     {
-        $user = User::with(['role', 'estado', 'genero'])->findOrFail($id);
-        return response()->json($user);
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/sessions");
+        if ($response->successful()) {
+            $sesiones = $response->json();
+            return view('user_profiles.sesiones', compact('sesiones'));
+        }
+        abort(404, 'Sesiones no encontradas');
     }
 
-    public function destroy($id)
+    public function permisos($id)
     {
-        $user = User::findOrFail($id);
-        $user->delete();
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/permissions");
+        if ($response->successful()) {
+            $permisos = $response->json();
+            return view('user_profiles.permisos', compact('permisos'));
+        }
+        abort(404, 'Permisos no encontrados');
+    }
 
-        return response()->json(['message' => 'Usuario eliminado correctamente.']);
+    public function historial($id)
+    {
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/password-history");
+        if ($response->successful()) {
+            $historial = $response->json();
+            return view('user_profiles.historial', compact('historial'));
+        }
+        abort(404, 'Historial no encontrado');
+    }
+
+    public function actividad($id)
+    {
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/activity");
+        if ($response->successful()) {
+            $actividad = $response->json();
+            return view('user_profiles.actividad', compact('actividad'));
+        }
+        abort(404, 'Actividad no encontrada');
+    }
+
+    public function empleado($id)
+    {
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/employee-details");
+        if ($response->successful()) {
+            $empleado = $response->json();
+            return view('user_profiles.empleado', compact('empleado'));
+        }
+        abort(404, 'Datos del empleado no encontrados');
+    }
+
+    public function resumen($id)
+    {
+        $response = Http::get(config('services.users_api.base_url') . "/users/{$id}/summary");
+        if ($response->successful()) {
+            $resumen = $response->json();
+            return view('user_profiles.resumen', compact('resumen'));
+        }
+        abort(404, 'Resumen no disponible');
     }
 }

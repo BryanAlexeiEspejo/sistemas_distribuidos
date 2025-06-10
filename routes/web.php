@@ -23,8 +23,48 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('login', [LoginController::class, 'login']);
+
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+
+
+//API
+
+use App\Http\Controllers\EventController;
+
+Route::get('/eventos', [EventController::class, 'index'])->name('eventos.index');
+Route::get('/eventos/reporte', [EventController::class, 'reporte'])->name('eventos.reporte');
+Route::get('/eventos/horarios', [EventController::class, 'horarios'])->name('eventos.horarios');
+Route::get('/eventos/{id}', [EventController::class, 'show'])->name('eventos.show');
+Route::get('/eventos/{id}/asistencia', [EventController::class, 'asistencia'])->name('eventos.asistencia');
+
+
+use App\Http\Controllers\UserController;
+
+// Usuarios
+Route::prefix('usuarios/{id}')->group(function () {
+    Route::get('/perfiles', [UserController::class, 'perfiles']);
+    Route::get('/sesiones', [UserController::class, 'sesiones']);
+    Route::get('/permisos', [UserController::class, 'permisos']);
+    Route::get('/historial', [UserController::class, 'historial']);
+    Route::get('/actividad', [UserController::class, 'actividad']);
+    Route::get('/empleado', [UserController::class, 'empleado']);
+    Route::get('/resumen', [UserController::class, 'resumen']);
+});
+
+// routes/web.php
+
+
+Route::get('/eventos', [EventController::class, 'index'])->name('eventos.index');
+
+
 
 Route::get('login/google', [LoginController::class, 'redirectToGoogle']);
 Route::get('login/google/callback', [LoginController::class, 'handleGoogleCallback']);
@@ -108,7 +148,6 @@ Route::get('/control-entradas-salidas', [ControlEntradaSalidaController::class, 
 
 
 
-use App\Http\Controllers\EventController;
 
 //API1
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -144,3 +183,15 @@ Route::resource('event_statuses', EventStatusController::class);
 Route::get('/ticket', function () {
     return view('ticket');
 })->name('ticket.view');
+
+
+
+
+
+
+
+use App\Http\Controllers\UserProfileController;
+
+Route::get('/mi-perfil', [UserProfileController::class, 'showAuthenticated'])
+    ->middleware('auth')
+    ->name('perfil.usuario');
